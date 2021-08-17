@@ -12,7 +12,7 @@ pip install your_project_name
 
 Fill me in please! Don't forget code examples:
 
-```python
+```
 1+1
 ```
 
@@ -53,7 +53,7 @@ Necessary steps for a new nbdev project:
     nbdev_build_docs
 9. git add, commit and push
 
-```python
+```
 %lsmagic
 ```
 

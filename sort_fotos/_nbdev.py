@@ -6,8 +6,8 @@ index = {"Card": "01_card.ipynb"}
 
 modules = ["card.py"]
 
-doc_url = "https://aloiswirth.github.io/nbdev_tutorial/"
+doc_url = "https://aloiswirth.github.io/sort_fotos/"
 
-git_url = "https://github.com/aloiswirth/nbdev_tutorial/tree/master/"
+git_url = "https://github.com/aloiswirth/sort_fotos/tree/main/"
 
 def custom_doc_links(name): return None
