@@ -1,8 +1,7 @@
 {
   "sort_fotos": {
     "Overview": "/",
-    "module name here": "core.html",
-    "Card": "card.html",
-    "nbdev first experiences with text styles ": "Formating_examples2.html"
+    "First Steps": "core.html",
+    "Card": "card.html"
   }
 }

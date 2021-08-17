@@ -10,14 +10,11 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: module name here
+      title: First Steps
       url: core.html
     - output: web,pdf
       title: Card
       url: card.html
-    - output: web,pdf
-      title: 'nbdev first experiences with text styles '
-      url: Formating_examples2.html
     output: web
     title: sort_fotos
   output: web
