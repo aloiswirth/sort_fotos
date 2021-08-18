@@ -1,7 +1,7 @@
 {
   "sort_fotos": {
     "Overview": "/",
-    "First Steps": "core.html",
-    "Card": "card.html"
+    "First Steps": "first_steps.html",
+    "Pictures": "pictures.html"
   }
 }

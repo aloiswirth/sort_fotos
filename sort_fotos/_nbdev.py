@@ -2,9 +2,9 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"Card": "01_card.ipynb"}
+index = {}
 
-modules = ["card.py"]
+modules = ["pictures.py"]
 
 doc_url = "https://aloiswirth.github.io/sort_fotos/"
 

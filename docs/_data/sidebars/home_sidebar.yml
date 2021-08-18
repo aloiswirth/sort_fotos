@@ -11,10 +11,10 @@ entries:
       url: /
     - output: web,pdf
       title: First Steps
-      url: core.html
+      url: first_steps.html
     - output: web,pdf
-      title: Card
-      url: card.html
+      title: Pictures
+      url: pictures.html
     output: web
     title: sort_fotos
   output: web
