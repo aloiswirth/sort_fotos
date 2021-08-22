@@ -38,7 +38,16 @@ nb_path: "nbs/00_pictures.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here is what the documentation + code looks like for Card:</p>
+<p>The first step is to get all directories. The reason for this is that the same photo might be stored in different directories. But there also might be photos with the same name but with different content. We will need to compare all photos with the same name in the different directories.<br>
+Therefore we start in building a pandas DataFrame with all essential data.</p>
+<p>It will contain the directory, the file name, the size and the different time stamps. If this information is not sufficient we will also need to read the picture pixel by pixel and compare.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We now start with the directory list. The root is the mapped MyCloud fileserver with the "My Pictures" folder. We will create an iteratively created list of subdirectories and append them to 'my_Dirs'.</p>
 
 </div>
 </div>
@@ -46,34 +55,19 @@ nb_path: "nbs/00_pictures.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">directory</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;/media/mycloud/My Pictures&quot;</span>
-
-<span class="k">for</span> <span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">dirnames</span><span class="p">,</span> <span class="n">filenames</span><span class="p">)</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">dirnames</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span>
-    <span class="k">break</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>/media/mycloud/My Pictures
-[&#39;Pics_20120130&#39;, &#39;My Scans&#39;, &#39;IPhone_Mama_FOTOS&#39;, &#39;27.09.04&#39;, &#39;TMP&#39;, &#39;Oma und Opa&#39;, &#39;Album Art&#39;, &#39;MCC Opening Mexico&#39;, &#39;iCloud Photos&#39;, &#39;Hochzeit&#39;, &#39;Galaxy Note II&#39;, &#39;Family&#39;, &#39;Casamento Andreia&#39;, &#39;BlackBerry&#39;, &#39;Arthur&#39;, &#39;Andrea Haus&#39;, &#39;Ana&#39;, &#39;Aline&#39;, &#39;2006_11_25&#39;, &#39;2006_11_20&#39;, &#39;2006_11_09&#39;, &#39;moved_from_root&#39;, &#39;Saved Pictures&#39;, &#39;ControlCenter4&#39;, &#39;Camera Roll&#39;, &#39;Angelina&#39;]
-[&#39;WirthFamily.JPG&#39;, &#39;TralhandonaSAP.JPG&#39;, &#39;Tchu.JPG&#39;, &#39;Tchu&amp;Rosinha.JPG&#39;, &#39;Tchu e eu.JPG&#39;, &#39;Rosinha.JPG&#39;, &#39;portugueiz.jpg&#39;, &#39;foto.JPG&#39;, &#39;Procuração Ana Cláudia.doc&#39;, &#39;photo.JPG&#39;, &#39;Pernilzinho.JPG&#39;, &#39;Pernil.JPG&#39;, &#39;Passport_foto-p1.jpg&#39;, &#39;Passbild_Alois-p1.jpg&#39;, &#39;OlhinhosdeSono.JPG&#39;, &#39;OFotografo3.JPG&#39;, &#39;OFotografo2.JPG&#39;, &#39;OFotografo.JPG&#39;, &#39;meninas_aprontando.jpg&#39;, &#39;Malaga_sol.jpg&#39;, &#39;LunchnaSAP.JPG&#39;, &#39;LunchatSAP.JPG&#39;, &#39;MCC_SOS_App_Favicon.png&#39;, &#39;IMG_1898.jpg&#39;, &#39;IMG00347-20130214-0905.jpg&#39;, &#39;IMG_0830.JPG&#39;, &#39;Hannah&amp;Judith.JPG&#39;, &#39;foto (2).JPG&#39;, &#39;Fot5A9759.jpg&#39;, &#39;Fot2A9759.jpg&#39;, &#39;Fot1A9759.jpg&#39;, &#39;DKC_0009.JPG&#39;, &#39;Cano_quebrado2.jpg&#39;, &#39;Cano_quebrado.jpg&#39;, &#39;Declaracao Alois.doc&#39;, &#39;Boletim_Arthur_201306.jpg&#39;, &#39;Ana1997.jpg&#39;, &#39;Altes_foto_Alois.gif&#39;, &#39;Alois.jpg&#39;, &#39;IMG_1897.jpg&#39;, &#39;Canguru.zip&#39;, &#39;A Fotografa.JPG&#39;, &#39;Global_ST_Prediction.png&#39;, &#39;0B860F73-7790-4232-BF36-92C7BCB6DAEA.heic&#39;, &#39;Timeout_parameter_SCP.png&#39;, &#39;thumbnail.webp&#39;, &#39;Big_data1.jpg&#39;, &#39;90D0B590-F3D5-49E5-9B46-3AB804D35553.heic&#39;, &#39;8C983E98-4F32-434F-8D83-C0571A267284_1_102_o.jpeg&#39;, &#39;4EEED75F-A149-48B2-B107-AAAC3858BDD6.heic&#39;, &#39;42704333-FABB-49E6-B93F-D17F5D0CBB93.heic&#39;, &#39;17F0230E-2C49-43EF-AB59-D3DE39E45A9C.heic&#39;, &#39;IMG_0499.PNG&#39;, &#39;IMG_2511.JPG&#39;, &#39;Alyssa 20180604_064136.jpg&#39;, &#39;IMG_0471.PNG&#39;, &#39;IMG_0373.PNG&#39;, &#39;IMG_0476.PNG&#39;, &#39;IMG_0753.PNG&#39;, &#39;IMG_0397.PNG&#39;, &#39;IMG_2517.JPG&#39;, &#39;IMG_1820.JPG&#39;, &#39;IMG_2705.JPG&#39;, &#39;IMG_0459.JPG&#39;, &#39;IMG_0580.PNG&#39;, &#39;IMG_0455.PNG&#39;, &#39;IMG_2376.JPG&#39;, &#39;IMG_3016.JPG&#39;, &#39;IMG-20180823-WA0008.jpg&#39;, &#39;IMG_2115.JPG&#39;, &#39;IMG_0050.MOV&#39;, &#39;IMG_0464.PNG&#39;, &#39;IMG_3037.JPG&#39;, &#39;IMG_0456.PNG&#39;, &#39;IMG_0751.PNG&#39;, &#39;IMG_2379.JPG&#39;, &#39;IMG_0469.PNG&#39;, &#39;IMG_0726.PNG&#39;, &#39;IMG_0513.PNG&#39;, &#39;3F310FC3-AEE6-4AC0-92D0-D23660BB7B29-1568-000004DD7659344A.jpg&#39;, &#39;IMG_0733.PNG&#39;, &#39;IMG_3041.JPG&#39;, &#39;IMG_2748.JPG&#39;, &#39;IMG_2130.JPG&#39;, &#39;IMG_2195.JPG&#39;, &#39;c7c54e31-2d75-4b71-b550-819763395698.jpg&#39;, &#39;IMG_1809.JPG&#39;, &#39;IMG_0694.PNG&#39;, &#39;IMG_2010.JPG&#39;, &#39;IMG_2016.JPG&#39;, &#39;IMG_2737.JPG&#39;, &#39;IMG_2514.JPG&#39;, &#39;IMG_0670.PNG&#39;, &#39;IMG_2713.JPG&#39;, &#39;IMG_2742.JPG&#39;, &#39;IMG_0627.PNG&#39;, &#39;IMG_0666.PNG&#39;, &#39;IMG_0693.PNG&#39;, &#39;IMG_0392.PNG&#39;, &#39;IMG_0585.PNG&#39;, &#39;IMG_0632.PNG&#39;, &#39;IMG_0003.JPG&#39;, &#39;IMG_0732.PNG&#39;, &#39;IMG_0502.PNG&#39;, &#39;IMG_0363.PNG&#39;, &#39;IMG_3096.JPG&#39;, &#39;IMG_0602.PNG&#39;, &#39;IMG_1765.JPG&#39;, &#39;IMG_3068.JPG&#39;, &#39;IMG_0435.JPG&#39;, &#39;IMG_0797.JPG&#39;, &#39;IMG_0453.PNG&#39;, &#39;IMG_0633.PNG&#39;, &#39;IMG_0544.PNG&#39;, &#39;IMG_2682.JPG&#39;, &#39;IMG_0702.PNG&#39;, &#39;IMG_3005.JPG&#39;, &#39;e0330166-87d3-45eb-a863-6ff4bbe7ad19.jpg&#39;, &#39;IMG_0542.PNG&#39;, &#39;IMG_2426.JPG&#39;, &#39;IMG-20181130-WA0004.jpg&#39;, &#39;IMG_0495.PNG&#39;, &#39;IMG_2490.JPG&#39;, &#39;IMG_0620.PNG&#39;, &#39;09E0E267-2BD3-447A-AAAD-24426CB70733-1568-000004D6009BCC53.jpg&#39;, &#39;IMG_2782.JPG&#39;, &#39;IMG_3028.JPG&#39;, &#39;IMG_0437.JPG&#39;, &#39;IMG_0529.PNG&#39;, &#39;IMG_0049.JPG&#39;, &#39;IMG_2487.JPG&#39;, &#39;IMG_0576.PNG&#39;, &#39;1dc00e8c-a937-4e8b-a730-e1821fc35be2.jpg&#39;, &#39;IMG_0451.PNG&#39;, &#39;IMG_2092.JPG&#39;, &#39;IMG_1995.JPG&#39;, &#39;IMG_2783.JPG&#39;, &#39;IMG_0622.JPG&#39;, &#39;IMG_0591.PNG&#39;, &#39;IMG_0728.PNG&#39;, &#39;IMG_0618.PNG&#39;, &#39;IMG_0583.PNG&#39;, &#39;IMG_2438.JPG&#39;, &#39;IMG_0538.PNG&#39;, &#39;IMG_0372.PNG&#39;, &#39;IMG_2123.JPG&#39;, &#39;IMG_0686.PNG&#39;, &#39;IMG_2704.JPG&#39;, &#39;IMG_0496.PNG&#39;, &#39;IMG_2116.JPG&#39;, &#39;IMG_3013.JPG&#39;, &#39;IMG_0599.PNG&#39;, &#39;987BFA32-8509-416C-9598-614DF2DA1B7B.JPG&#39;, &#39;IMG_0679.PNG&#39;, &#39;IMG_0677.JPG&#39;, &#39;Titelloses 23_20200328203237.png&#39;, &#39;IMG_0567.PNG&#39;, &#39;IMG_0701.PNG&#39;, &#39;IMG_0553.PNG&#39;, &#39;IMG_3076.JPG&#39;, &#39;IMG_0470.PNG&#39;, &#39;IMG_2420.JPG&#39;, &#39;IMG_3074.JPG&#39;, &#39;IMG_0734.PNG&#39;, &#39;IMG-20180807-WA0003.jpg&#39;, &#39;IMG_3024.JPG&#39;, &#39;IMG_0656.MOV&#39;, &#39;IMG_0749.PNG&#39;, &#39;IMG_2792.JPG&#39;, &#39;IMG_0569.PNG&#39;, &#39;IMG_0715.PNG&#39;, &#39;IMG_2496.JPG&#39;, &#39;IMG_0536.PNG&#39;, &#39;IMG_2702.JPG&#39;, &#39;IMG-20180823-WA0001.jpg&#39;, &#39;IMG_3039.JPG&#39;, &#39;IMG_0676.JPG&#39;, &#39;IMG_0510.PNG&#39;, &#39;IMG_3033.JPG&#39;, &#39;IMG_0433.JPG&#39;, &#39;IMG_2435.JPG&#39;, &#39;IMG_0035.JPG&#39;, &#39;IMG_0546.PNG&#39;, &#39;9f3a2bfd-1fed-43b8-9e4a-d21ecaa36c18.jpg&#39;, &#39;IMG_0628.PNG&#39;, &#39;IMG_0609.PNG&#39;, &#39;IMG_0509.PNG&#39;, &#39;IMG_0795.JPG&#39;, &#39;9ab54848-673a-4ddb-81a8-aef60de90a91.jpg&#39;, &#39;IMG_2498.JPG&#39;, &#39;IMG_3029.JPG&#39;, &#39;IMG_0616.PNG&#39;, &#39;IMG_2473.JPG&#39;, &#39;IMG_0718.PNG&#39;, &#39;IMG_0727.PNG&#39;, &#39;IMG_0407.PNG&#39;, &#39;IMG_0607.PNG&#39;, &#39;IMG_0505.PNG&#39;, &#39;IMG_0539.PNG&#39;, &#39;IMG_3079.JPG&#39;, &#39;ad11d67c-ee42-44d3-9266-0dba4c08b9ab.jpg&#39;, &#39;IMG_0712.PNG&#39;, &#39;IMG_0519.PNG&#39;, &#39;IMG_0545.PNG&#39;, &#39;IMG_0764.PNG&#39;, &#39;IMG_2780.JPG&#39;, &#39;IMG_0587.PNG&#39;, &#39;IMG_2017.JPG&#39;, &#39;IMG-20181112-WA0002.jpg&#39;, &#39;IMG_0434.JPG&#39;, &#39;IMG_0398.PNG&#39;, &#39;IMG_2738.JPG&#39;, &#39;IMG_2493.JPG&#39;, &#39;IMG_0698.PNG&#39;, &#39;IMG_2794.JPG&#39;, &#39;IMG_3048.JPG&#39;, &#39;IMG_2020.JPG&#39;, &#39;IMG_3002.JPG&#39;, &#39;IMG_3003.JPG&#39;, &#39;IMG_2008.JPG&#39;, &#39;IMG_0590.PNG&#39;, &#39;IMG_3089.JPG&#39;, &#39;IMG_3083.JPG&#39;, &#39;IMG_3044.JPG&#39;, &#39;IMG_3105.JPG&#39;, &#39;IMG_2736.JPG&#39;, &#39;IMG_0512.PNG&#39;, &#39;IMG_0418.JPG&#39;, &#39;IMG_0530.PNG&#39;, &#39;IMG_0668.PNG&#39;, &#39;IMG_0699.PNG&#39;, &#39;IMG_0721.PNG&#39;, &#39;IMG_0487.PNG&#39;, &#39;IMG_2032.JPG&#39;, &#39;IMG_2423.JPG&#39;, &#39;IMG_2120.JPG&#39;, &#39;IMG_2740.JPG&#39;, &#39;IMG_1813.JPG&#39;, &#39;IMG_2022.JPG&#39;, &#39;IMG_0625.JPG&#39;, &#39;IMG_2758.JPG&#39;, &#39;IMG_1994.JPG&#39;, &#39;IMG_0374.PNG&#39;, &#39;IMG_3010.JPG&#39;, &#39;IMG_3106.JPG&#39;, &#39;IMG-20180823-WA0003.jpg&#39;, &#39;IMG_2744.JPG&#39;, &#39;IMG_0581.PNG&#39;, &#39;IMG_0452.PNG&#39;, &#39;IMG_2429.JPG&#39;, &#39;IMG_0598.PNG&#39;, &#39;IMG_2031.JPG&#39;, &#39;IMG_0419.JPG&#39;, &#39;IMG_2015.JPG&#39;, &#39;IMG_0551.JPG&#39;, &#39;IMG_0413.JPG&#39;, &#39;IMG_0098.JPG&#39;, &#39;IMG_0548.PNG&#39;, &#39;IMG_0046.JPG&#39;, &#39;IMG_2078.JPG&#39;, &#39;IMG_0688.PNG&#39;, &#39;IMG-20181112-WA0040.jpg&#39;, &#39;IMG_0742.PNG&#39;, &#39;IMG_2513.JPG&#39;, &#39;IMG_0745.PNG&#39;, &#39;IMG_1808.JPG&#39;, &#39;IMG_3069.JPG&#39;, &#39;IMG_0524.PNG&#39;, &#39;IMG_0717.PNG&#39;, &#39;IMG_3107.JPG&#39;, &#39;IMG_0454.PNG&#39;, &#39;pic.JPG&#39;, &#39;IMG_1927.JPG&#39;, &#39;IMG_2421.JPG&#39;, &#39;IMG_2774.JPG&#39;, &#39;IMG_2362.JPG&#39;, &#39;IMG_3051.JPG&#39;, &#39;IMG_2377.JPG&#39;, &#39;IMG_0600.PNG&#39;, &#39;IMG_2427.JPG&#39;, &#39;IMG_2012.JPG&#39;, &#39;IMG_0603.PNG&#39;, &#39;IMG_2422.JPG&#39;, &#39;IMG_3095.JPG&#39;, &#39;IMG_0486.PNG&#39;, &#39;IMG_0489.PNG&#39;, &#39;IMG_0586.PNG&#39;, &#39;IMG-20181030-WA0000.jpg&#39;, &#39;1fdac876-e679-46fa-92c4-e20c282531ff.jpg&#39;, &#39;IMG_0665.PNG&#39;, &#39;IMG_2707.JPG&#39;, &#39;IMG_0671.PNG&#39;, &#39;IMG_0592.PNG&#39;, &#39;IMG_0403.PNG&#39;, &#39;IMG_0446.JPG&#39;, &#39;IMG_0412.PNG&#39;, &#39;IMG_0723.PNG&#39;, &#39;IMG_3081.JPG&#39;, &#39;09EA583D-2AC3-46F0-87A5-A4391CDA1FE3-1568-000004DA1E3107CF.jpg&#39;, &#39;IMG_0597.PNG&#39;, &#39;IMG_2025.JPG&#39;, &#39;IMG_0528.PNG&#39;, &#39;IMG_0099.JPG&#39;, &#39;IMG_0449.PNG&#39;, &#39;IMG_1815.JPG&#39;, &#39;IMG_0483.JPG&#39;, &#39;IMG_0748.PNG&#39;, &#39;539E063B-B382-4006-ABF9-CB193FB2C0E3-711-00000064BA2F0089.jpg&#39;, &#39;IMG_1301.JPG&#39;, &#39;IMG_2389.JPG&#39;, &#39;91FEE659-1C64-4FBD-80AF-3F0ED4B52439-1568-000004DA4A656C1B.jpg&#39;, &#39;IMG_2365.JPG&#39;, &#39;IMG_2522.JPG&#39;, &#39;IMG_0729.PNG&#39;, &#39;IMG_2034.JPG&#39;, &#39;IMG_0724.PNG&#39;, &#39;IMG_0700.PNG&#39;, &#39;IMG_0747.PNG&#39;, &#39;1e1049bd-d62e-4bd9-9b45-6a2fc81ce18b.jpg&#39;, &#39;IMG_3077.JPG&#39;, &#39;6AFC5546-2530-4826-BB4F-88FCE7A3A673-638-0000004F85D36A1D.jpg&#39;, &#39;IMG_0655.MOV&#39;, &#39;IMG_3050.JPG&#39;, &#39;IMG_1056.JPG&#39;, &#39;IMG_3008.JPG&#39;, &#39;IMG_0047.MOV&#39;, &#39;IMG_2760.JPG&#39;, &#39;IMG_0683.PNG&#39;, &#39;IMG_0574.PNG&#39;, &#39;IMG_2013.JPG&#39;, &#39;IMG_1877.JPG&#39;, &#39;IMG_0722.PNG&#39;, &#39;IMG_1055.JPG&#39;, &#39;IMG_0508.PNG&#39;, &#39;IMG_4330.HEIC&#39;, &#39;IMG_1811.JPG&#39;, &#39;IMG_2394.JPG&#39;, &#39;64AA2C01-419F-4164-84A1-C22D6F81350D-1568-000004DAAD30E906.jpg&#39;, &#39;IMG_0051.JPG&#39;, &#39;290f245a-b94d-49e4-b99a-92d0d03062f1.jpg&#39;, &#39;IMG_2708.JPG&#39;]
-</pre>
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="fast_scandir" class="doc_header"><code>fast_scandir</code><a href="https://github.com/aloiswirth/sort_fotos/tree/main/sort_fotos/pictures.py#L16" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>fast_scandir</code>(<strong><code>dirname</code></strong>)</p>
+</blockquote>
+
 </div>
+
 </div>
 
 </div>
@@ -85,17 +79,33 @@ nb_path: "nbs/00_pictures.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;pictures&#39;</span><span class="p">:</span> <span class="n">filenames</span><span class="p">,</span>
-    <span class="s1">&#39;paths&#39;</span><span class="p">:</span> <span class="n">dirpath</span>
-<span class="p">}</span>
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df1</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;directory&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;file_name&quot;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -127,69 +137,38 @@ nb_path: "nbs/00_pictures.ipynb"
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>pictures</th>
-      <th>paths</th>
+      <th>directory</th>
+      <th>file_name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>WirthFamily.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0008.jpg'&gt;</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>TralhandonaSAP.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0007.jpg'&gt;</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Tchu.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0006.jpg'&gt;</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Tchu&amp;Rosinha.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0005.jpg'&gt;</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Tchu e eu.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>336</th>
-      <td>IMG_2394.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
-    </tr>
-    <tr>
-      <th>337</th>
-      <td>64AA2C01-419F-4164-84A1-C22D6F81350D-1568-0000...</td>
-      <td>/media/mycloud/My Pictures</td>
-    </tr>
-    <tr>
-      <th>338</th>
-      <td>IMG_0051.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
-    </tr>
-    <tr>
-      <th>339</th>
-      <td>290f245a-b94d-49e4-b99a-92d0d03062f1.jpg</td>
-      <td>/media/mycloud/My Pictures</td>
-    </tr>
-    <tr>
-      <th>340</th>
-      <td>IMG_2708.JPG</td>
-      <td>/media/mycloud/My Pictures</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0004.jpg'&gt;</td>
     </tr>
   </tbody>
 </table>
-<p>341 rows × 2 columns</p>
 </div>
 </div>
 
@@ -204,40 +183,6 @@ nb_path: "nbs/00_pictures.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stat_data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">entry_data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">with</span> <span class="n">os</span><span class="o">.</span><span class="n">scandir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span> <span class="k">as</span> <span class="n">dir_content</span><span class="p">:</span>
-    <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">dir_content</span><span class="p">:</span>
-        <span class="n">info</span> <span class="o">=</span> <span class="n">entry</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span>        
-        <span class="n">stat_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
-        <span class="n">entry_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stat_data</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">entry_data</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>367
-367
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     {% endraw %}
@@ -249,10 +194,8 @@ nb_path: "nbs/00_pictures.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">entry_data</span><span class="p">)</span>
-<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">stat_data</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -284,177 +227,98 @@ nb_path: "nbs/00_pictures.ipynb"
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>0</th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
+      <th>directory</th>
+      <th>file_name</th>
+      <th>st_mode</th>
+      <th>st_ino</th>
+      <th>st_dev</th>
+      <th>st_nlink</th>
+      <th>st_uid</th>
+      <th>st_gid</th>
+      <th>st_size</th>
+      <th>st_atime</th>
+      <th>st_mtime</th>
+      <th>st_ctime</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>&lt;DirEntry 'Pics_20120130'&gt;</td>
-      <td>16877</td>
-      <td>157988103</td>
-      <td>79</td>
-      <td>2</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0008.jpg'&gt;</td>
+      <td>33261</td>
+      <td>157615585</td>
+      <td>77</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>1547898654</td>
-      <td>1547898654</td>
-      <td>1547898654</td>
+      <td>801274</td>
+      <td>1226915253</td>
+      <td>1226915253</td>
+      <td>1226915253</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>&lt;DirEntry 'My Scans'&gt;</td>
-      <td>16877</td>
-      <td>158907182</td>
-      <td>79</td>
-      <td>2</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0007.jpg'&gt;</td>
+      <td>33261</td>
+      <td>157615586</td>
+      <td>77</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>1547899900</td>
-      <td>1547899900</td>
-      <td>1547899900</td>
+      <td>826741</td>
+      <td>1226915162</td>
+      <td>1226915162</td>
+      <td>1226915162</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>&lt;DirEntry 'IPhone_Mama_FOTOS'&gt;</td>
-      <td>16877</td>
-      <td>158907185</td>
-      <td>79</td>
-      <td>2</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0006.jpg'&gt;</td>
+      <td>33261</td>
+      <td>157615587</td>
+      <td>77</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>1547899519</td>
-      <td>1547899519</td>
-      <td>1547899519</td>
+      <td>750390</td>
+      <td>1226915101</td>
+      <td>1226915101</td>
+      <td>1226915101</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>&lt;DirEntry '27.09.04'&gt;</td>
-      <td>16877</td>
-      <td>158907189</td>
-      <td>79</td>
-      <td>2</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0005.jpg'&gt;</td>
+      <td>33261</td>
+      <td>157615588</td>
+      <td>77</td>
+      <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>1547899894</td>
-      <td>1547899894</td>
-      <td>1547899894</td>
+      <td>783234</td>
+      <td>1226915046</td>
+      <td>1226915046</td>
+      <td>1226915046</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>&lt;DirEntry 'TMP'&gt;</td>
-      <td>16877</td>
-      <td>158907194</td>
-      <td>79</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1589826397</td>
-      <td>1589826397</td>
-      <td>1589826397</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>362</th>
-      <td>&lt;DirEntry 'IMG_2394.JPG'&gt;</td>
+      <td>/media/mycloud/My Pictures/My Scans</td>
+      <td>&lt;DirEntry 'Val_Pagamento_2008_0004.jpg'&gt;</td>
       <td>33261</td>
-      <td>157631698</td>
-      <td>79</td>
+      <td>157615589</td>
+      <td>77</td>
       <td>1</td>
       <td>0</td>
       <td>0</td>
-      <td>21907</td>
-      <td>1580295076</td>
-      <td>1580295076</td>
-      <td>1580295076</td>
-    </tr>
-    <tr>
-      <th>363</th>
-      <td>&lt;DirEntry '64AA2C01-419F-4164-84A1-C22D6F81350...</td>
-      <td>33261</td>
-      <td>157631699</td>
-      <td>79</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>32829</td>
-      <td>1582990726</td>
-      <td>1582990726</td>
-      <td>1582990726</td>
-    </tr>
-    <tr>
-      <th>364</th>
-      <td>&lt;DirEntry 'IMG_0051.JPG'&gt;</td>
-      <td>33261</td>
-      <td>157631700</td>
-      <td>79</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3432385</td>
-      <td>1533476216</td>
-      <td>1533476216</td>
-      <td>1533476216</td>
-    </tr>
-    <tr>
-      <th>365</th>
-      <td>&lt;DirEntry '290f245a-b94d-49e4-b99a-92d0d03062f...</td>
-      <td>33261</td>
-      <td>157631701</td>
-      <td>79</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>99750</td>
-      <td>1553886249</td>
-      <td>1553886249</td>
-      <td>1553886249</td>
-    </tr>
-    <tr>
-      <th>366</th>
-      <td>&lt;DirEntry 'IMG_2708.JPG'&gt;</td>
-      <td>33261</td>
-      <td>157631702</td>
-      <td>79</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>51832</td>
-      <td>1585236358</td>
-      <td>1585236358</td>
-      <td>1585236358</td>
+      <td>774076</td>
+      <td>1226914986</td>
+      <td>1226914986</td>
+      <td>1226914986</td>
     </tr>
   </tbody>
 </table>
-<p>367 rows × 11 columns</p>
 </div>
 </div>
 

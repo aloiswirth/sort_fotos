@@ -2,7 +2,13 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {}
+index = {"fast_scandir": "00_pictures.ipynb",
+         "mypath": "00_pictures.ipynb",
+         "my_Dirs": "00_pictures.ipynb",
+         "stat_data": "00_pictures.ipynb",
+         "entry_data": "00_pictures.ipynb",
+         "df1": "00_pictures.ipynb",
+         "df2": "00_pictures.ipynb"}
 
 modules = ["pictures.py"]
 
