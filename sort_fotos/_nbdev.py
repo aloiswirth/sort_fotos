@@ -8,7 +8,9 @@ index = {"fast_scandir": "00_pictures.ipynb",
          "stat_data": "00_pictures.ipynb",
          "entry_data": "00_pictures.ipynb",
          "df1": "00_pictures.ipynb",
-         "df2": "00_pictures.ipynb"}
+         "df2": "00_pictures.ipynb",
+         "df": "00_pictures.ipynb",
+         "df_duplicates": "00_pictures.ipynb"}
 
 modules = ["pictures.py"]
 
